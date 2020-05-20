@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/Navigation-Clean.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/styles.css') }}">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md text-center navigation-clean">
+        <div class="container"><a class="navbar-brand" href="../">Canceled</a><button class="navbar-toggler" data-toggle="collapse"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
+    </nav>
+    <div class="container d-md-flex justify-content-md-center">
+        <div class="card" style="height: 70vh;width: 50vh;border-radius: 20px;">
+            <div class="card-body" style="width: 50vh;height: 70vh;">
+                <h4 class="text-center card-title">Create an Account</h4>
+                <h6 class="text-center text-muted card-subtitle mb-2">Please enter your information</h6>
+                <p class="card-text"></p>
+
+                {% block content %}
+                    <form style="width: 40vh; height: 40vh;" action="" method="post">
+                        {{ form.hidden_tag() }}
+                        <p>
+                            {{ form.name.label }}<br>
+                            {{ form.name(class_="form-control") }}
+                        </p>
+                        <p>
+                            {{ form.email.label }}<br>
+                            {{ form.email(class_="form-control") }}
+                            {% for error in form.email.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.password.label }}<br>
+                            {{ form.password(class_="form-control") }}
+                            {% for error in form.password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.passwordComfirm.label }}<br>
+                            {{ form.passwordComfirm(class_="form-control") }}
+                            {% for error in form.passwordComfirm.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <center><p>{{ form.submit(class_="btn btn-light", style="background-color: rgb(86,198,198);color: rgb(255,255,255);border-radius: 20px; width: 20vh;") }}</p></center>
+                    </form>
+                {% endblock %}
+
+                <!--<form style="width: 40vh;height: 40vh;">
+                    <div class="form-group"><label>Full Name</label><input class="form-control" type="text"></div>
+                    <div class="form-group"><label>Email</label><input class="form-control" type="text"></div>
+                    <div class="form-group"><label>Password</label><input class="form-control" type="text"></div>
+                    <button class="btn btn-light" type="button" style="background-color: rgb(86,198,198);color: rgb(255,255,255);border-radius: 20px;">Register</button>
+                  </form>-->
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

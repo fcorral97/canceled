@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+{% extends "base.html" %}
+{% block body %}
+
+<div class="container d-md-flex justify-content-md-center">
+    <div class="card" style="border-radius: 20px;">
+        <div class="card-body" style="width: 60vh;height: auto;">
+            <h4 class="text-center card-title">Edit Account Information</h4>
+            <h6 class="text-center text-muted card-subtitle mb-2">Enter information you would like to change:</h6>
+            <p class="card-text"></p>
+            {% block content %}
+            <form style="" action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.name.label }}<br>
+                    {{ form.name(class_="form-control") }}
+                    {% for error in form.name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.email.label }}<br>
+                    {{ form.email(class_="form-control") }}
+                    {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.new_password.label }}<br>
+                    {{ form.new_password(class_="form-control") }}
+                    {% for error in form.curr_password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.new_passwordComfirm.label }}<br>
+                    {{ form.new_passwordComfirm(class_="form-control") }}
+                    {% for error in form.curr_password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <h6>Please verify current password to update account information:</h6>
+                <p>
+                    {{ form.curr_password.label }}<br>
+                    {{ form.curr_password(class_="form-control") }}
+                    {% for error in form.curr_password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <center><p>{{ form.submit(class_="btn btn-light", style="background-color: rgb(86,198,198);color: rgb(255,255,255);border-radius: 20px; width: 20vh;") }}</p></center>
+            </form>
+            {% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+</html>

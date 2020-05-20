@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+{% extends "base.html" %}
+{% block body %}
+  <div class="container">
+    <h2 style="margin-top: 15px; margin-bottom: 30px;"> {{ context.name }}'s Dashboard</h2>
+      <div class="row justify-content-center align-items-center" style="margin-bottom: 5vh;">
+          <div class="col-auto"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#createModal" style="width: 30vw;height: 10vh;border-radius: 20px;background-color: rgb(86,198,198);font-size: 2.5vw;">Create Cancel Request</button></div>
+      </div>
+      <div class="modal fade" id="createModal" role="dialog" tabindex="-1">
+        {% block content %}
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Create Cancel Request</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+              <form action="" method="post">
+                <div class="modal-body">
+                        {{ context.form.csrf_token }}
+                        <p>
+                            {{ context.form.friend.label }}<br>
+                            {{ context.form.friend(class_="form-control") }}
+                            {% for error in context.form.friend.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ context.form.title.label }}<br>
+                            {{ context.form.title(class_="form-control") }}
+                            {% for error in context.form.title.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ context.form.date.label }}<br>
+                            {{ context.form.date(class_="form-control", type="date") }}
+                            {% for error in context.form.date.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ context.form.time.label }}<br>
+                            {{ context.form.time(class_="form-control") }}
+                            {% for error in context.form.time.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-light" type="button" data-dismiss="modal" style="border-radius: 20px; width: 20vh;">Cancel</button>
+                  <p>{{ context.form.submit(class_="btn btn-light", style="background-color: rgb(86,198,198);color: rgb(255,255,255);border-radius: 20px; width: 20vh;") }}</p>
+                </div>
+              </form>
+          </div>
+        </div>
+        {% endblock %}
+      </div>
+
+      <div class="row justify-content-center align-items-center" style="padding: 15px;">
+          <div class="col-auto" style="padding-bottom: 15px;padding-top: 15px;">
+            {% if context.requests %}
+            {%for request in context.requests%}
+            <form action="" method="post">
+              {{ context.close_form.csrf_token }}
+
+              {{ context.close_form.id(value=request.id) }}
+              <div class="card" style="width: 60vw;margin-bottom: 15px;height: 25vh;">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col"><h5 class="mb-0">{{ request.title }}</h5></div>
+                      <div class="col"><p>{{ context.close_form.close(class="close", style="border: none;") }}</p></div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                      <div class="row">
+                          <div class="col">
+                              <p> {{ request.friend_name }}</p>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col">
+                              <p>{{ request.time }} of {{ request.date.strftime('%B %d, %Y') }}</p>
+                          </div>
+                          <div class="col">
+                              <p>Status: {{ request.status }}</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </form>
+              {%endfor%}
+              {% else %}
+              <h3>No Requests, try making one!</h3>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+  {% endblock %}
+</html>

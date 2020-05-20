@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+{% extends "base.html" %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+              <form action="" method="post">
+                <h4>Add Friend</h4>
+                  {{ context.form_friend.csrf_token }}
+                  <p>
+                      {{ context.form_friend.email.label }}<br>
+                      {{ context.form_friend.email(class_="form-control") }}
+                      {% for error in context.form_friend.email.errors %}
+                      <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </p>
+                  <p>{{ context.form_friend.add(class_="btn btn-light", style="background-color: rgb(86,198,198);color: rgb(255,255,255);border-radius: 20px;") }}</p>
+              </form>
+            </div>
+            <div class="col">
+                <h3>Friends</h3>
+                <ul class="list-group">
+                  {% if context.friends or context.requests%}
+                  {%for friend in context.requests%}
+                    {% if not friend.accept_status%}
+                    <form action="" method="post">
+                    {{ context.form_friends.csrf_token }}
+
+                    {{ context.form_friends.friend_name(value=friend.name) }}
+                    {{ context.form_friends.friend_email(value= friend.email ) }}
+                    <li class="list-group-item" style="height: 8vh;">
+                        <div class="row">
+                            <div class="col"><span>{{ friend.name }}</span></div>
+                            <div class="col">
+                                <p class="text-center text-muted">{{ friend.email }}</p>
+                            </div>
+                            {% if not friend.status %}
+                            <div class="col">
+                              <p>{{ context.form_friends.accept(class_="btn btn-success", style="border-radius: 20px; width: 11vh;") }}       {{ context.form_friends.deny(class_="btn btn-danger", style="border-radius: 20px; width: 11vh;") }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+                    </form>
+                    {% endif %}
+                  {%endfor%}
+                  {%for friend in context.friends%}
+                  <form action="" method="post">
+                    {{ context.form_friends.csrf_token }}
+
+                    {{ context.form_friends.friend_name(value=friend.friend_name) }}
+                    {{ context.form_friends.friend_email(value= friend.friend_email ) }}
+                    <li class="list-group-item" style="height: 8vh;">
+                        <div class="row">
+                            <div class="col"><span>{{ friend.friend_name }}</span></div>
+                            <div class="col">
+                                <p class="text-center text-muted">{{ friend.friend_email }}</p>
+                            </div>
+                            {% if friend.accept_status %}
+                            <div class="col">
+                              <p>{{ context.form_friends.remove(class_="btn btn-danger float-right", style="border-radius: 20px; width: 11vh;") }}</p>
+                            </div>
+                            {% else %}
+                            <div class="col">
+                              <p>{{ context.form_friends.cancel(class_="btn btn-danger float-right", style="border-radius: 20px; width: 20vh;") }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+                  </form>
+                  {%endfor%}
+                  {% else %}
+                  <br>
+                  <li class="list-group-item" style="height: 8vh;">
+                      <div class="row justify-content-center">
+                          <div class="col-5"><span><h5>No Friends, try adding one!</h5></div>
+                      </div>
+                  </li>
+                  {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</html>
